@@ -5,9 +5,6 @@
 
 ;;; Code:
 
-; (prelude-add-subfolders-to-load-path prelude-personal-dir)
-
-; (require 'tomorrow-night-theme)
 ;; (setq debug-on-error 't)
 
 
