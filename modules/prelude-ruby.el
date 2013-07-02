@@ -56,6 +56,11 @@
 (eval-after-load 'ruby-mode
   '(progn
      (defun prelude-ruby-mode-defaults ()
+       (require 'inf-ruby)
+       (require 'ruby-tools)
+       (require 'yari)
+       (require 'ruby-end)
+
        (inf-ruby-setup-keybindings)
        ;; turn off the annoying input echo in irb
        (setq comint-process-echoes t)
