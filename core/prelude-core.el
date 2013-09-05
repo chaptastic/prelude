@@ -377,7 +377,6 @@ Doesn't mess with special buffers."
 (defvar prelude-tips
   '("Press <C-c o> to open a file with external program."
     "Press <C-c p f> to navigate a project's files with ido."
-    "Press <C-c h> to navigate a project in Helm."
     "Press <C-c g> to search in Google."
     "Press <C-c r> to rename the current buffer and file it's visiting."
     "Press <C-c t> to open a terminal in Emacs."

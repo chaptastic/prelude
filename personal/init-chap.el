@@ -12,7 +12,6 @@
                                erc
                                magithub
                                base16-theme
-                               helm-ack
                                ack-menu
                                iy-go-to-char
                                multiple-cursors
@@ -72,11 +71,6 @@
 (global-set-key (kbd "C-@") 'er/expand-region)
 (global-set-key (kbd "C-!") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-#") 'mc/mark-next-like-this)
-
-(global-set-key (kbd "C-c i") 'helm-imenu)
-;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
-;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-;; (helm-mode 1)
 
 ;; Define a keymap for mark object commands
 (define-prefix-command 'mark-object-map)

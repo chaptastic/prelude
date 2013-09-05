@@ -57,7 +57,6 @@
     (define-key map (kbd "C-c t") 'prelude-visit-term-buffer)
     (define-key map (kbd "C-c k") 'prelude-kill-other-buffers)
     (define-key map (kbd "C-c TAB") 'prelude-indent-rigidly-and-copy-to-clipboard)
-    (define-key map (kbd "C-c h") 'helm-prelude)
     map)
   "Keymap for Prelude mode.")
 
@@ -85,9 +84,6 @@
                          ["Indent rigidly and copy to clipboard" prelude-indent-rigidly-and-copy-to-clipboard]
                          ["Insert date" prelude-insert-date]
                          ["Eval and replace" prelude-eval-and-replace])
-
-                        ("Navigation"
-                         ["Helm" helm-prelude])
 
                         ("Windows"
                          ["Swap windows" prelude-swap-windows])
