@@ -1,4 +1,4 @@
-;;; init-chap  -- personalized init file
+;; init-chap  -- personalized init file
 
 ;;; Commentary:
 ;;;  Seriously?
@@ -7,11 +7,14 @@
 
 ;; (setq debug-on-error 't)
 
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
 (prelude-ensure-module-deps '(deft
                                erc
+                               epg epa
                                magithub
                                base16-theme
+                               cyberpunk-theme
                                ack-menu
                                iy-go-to-char
                                multiple-cursors
@@ -29,11 +32,31 @@
                                rinari
                                ruby-block
                                sass-mode
-                               powerline
-                               ac-js2))
+                               ido-vertical-mode
+                               ido-ubiquitous
+                               ac-js2
+                               soothe-theme
+                               buffer-move
+                               org-plus-contrib
+                               clojure-cheatsheet
+                               irfc
+                               gruber-darker-theme
+                               hemisu-theme
+                               ir-black-theme
+                               )
+                            )
 
+(require 'epa-file)
+(epa-file-enable)
 
-(load-theme 'solarized-dark t t)
+(setq custom-theme-directory (expand-file-name "./themes/" prelude-personal-dir))
+(add-to-list 'custom-theme-load-path custom-theme-directory)
+(add-to-list 'load-path prelude-personal-dir)
+;; (load-theme 'solarized-dark t t)
+;;(load-theme 'soothe t t)
+;;(enable-theme 'soothe)
+(load-theme 'ir-black-chap t t)
+(enable-theme 'ir-black-chap)
 
 (annoying-arrows-mode)
 
@@ -64,7 +87,6 @@
 ; (key-chord-define-global "gg" 'goto-line)
 (key-chord-mode -1)
 
-
 (require 'expand-region)
 (require 'multiple-cursors)
 
@@ -91,16 +113,35 @@
 (add-hook 'ido-setup-hook 'ido-define-keys)
 
 (ido-everywhere 1)
+(ido-vertical-mode)
 
-(defun switch-buffer-with-project (arg)
-  (interactive "p")
-  (if (> arg 1)
-      (ido-switch-buffer)
+(require 'dash)
+
+(defun promote-project-buffers (buffers project-root)
+  (apply 'append
+         (-separate (lambda (buf)
+                      (projectile-project-buffer-p buf project-root))
+                    buffers)))
+
+(defadvice buffer-list (around projectile-aware-buffer-list activate)
+  "Order buffers with current project first."
+  (let ((results ad-do-it))
     (if (projectile-project-p)
-        (projectile-switch-to-buffer)
-      (ido-switch-buffer))))
+        (let ((proj-root (projectile-project-root)))
+         (promote-project-buffers results proj-root))
+      results)))
 
-(global-set-key (kbd "C-x b") 'switch-buffer-with-project)
+(ad-activate 'buffer-list t)
+
+;; (defun switch-buffer-with-project (arg)
+;;   (interactive "p")
+;;   (if (> arg 1)
+;;       (ido-switch-buffer)
+;;     (if (projectile-project-p)
+;;         (projectile-switch-to-buffer)
+;;       (ido-switch-buffer))))
+
+;; (global-set-key (kbd "C-x b") 'switch-buffer-with-project)
 
 ;; (defun open-line-below ()
 ;;   "Open a new line below the current line."
@@ -135,44 +176,6 @@
 ;; (global-set-key (kbd "M-:") 'evilnc-comment-or-uncomment-to-the-line)
 (global-set-key (kbd "s-/") 'evilnc-comment-or-uncomment-lines)
 
-;;; Set up EVIL mode
-(defun setup-evil-mode ()
-  "Require and turn on evil mode"
-  (require 'evil)
-  (require 'evil-leader)
-
-  (evil-leader/set-key
-    "f" 'helm-find-files
-    "b" 'helm-buffers-list
-    "e" 'helm-prelude
-    "t" 'prelude-ido-goto-symbol
-    "x" 'kill-buffer
-    "ci" 'evilnc-comment-or-uncomment-lines
-    "cl" 'evilnc-comment-or-uncomment-to-the-line)
-
-  (evil-mode 1)
-  (global-evil-leader-mode)
-  (evil-leader/set-leader ",")
-
-  (evil-define-key 'insert paredit-mode-map
-    (kbd "(") 'paredit-open-round
-    (kbd ")") 'paredit-close-round
-    (kbd "M-)") 'paredit-close-round-and-newline
-    (kbd "[") 'paredit-open-square
-    (kbd "]") 'paredit-close-square
-    (kbd "\"") 'paredit-doublequote
-    (kbd "M-\"") 'paredit-meta-doublequote
-    (kbd "\\") 'paredit-backslash
-    (kbd ";") 'paredit-semicolon
-    (kbd "M-;") 'paredit-comment-dwim
-    (kbd "C-j") 'paredit-newline
-    (kbd "C-d") 'paredit-forward-delete
-    (kbd "DEL") 'paredit-backward-delete
-    (kbd "C-k") 'paredit-kill
-    (kbd "M-d") 'paredit-forward-kill-word
-    (kbd "M-DEL") 'paredit-backward-kill-word)
-  nil)
-
 (electric-indent-mode +1)
 
 ;; setup ruby stuff
@@ -204,7 +207,60 @@
      (before 'defun)
      (before-all 'defun)
      (after 'defun)
-     (after-all 'defun)))
+     (after-all 'defun)
+     (defroutes 'defun)
+     (GET 2)
+     (POST 2)
+     (PUT 2)
+     (DELETE 2)
+     (HEAD 2)
+     (ANY 2)
+     (context 2)))
+
+(require 'init-mu4e)
+
+(setq irc-password
+      (shell-command-to-string "python -c 'from __future__ import print_function; import keyring; print(keyring.get_password(\"irc\", \"chaptastic\"), end=\"\")'"))
+
+(setq erc-nick "chaptastic"
+      erc-hide-list '("JOIN" "PART" "QUIT"))
+
+(defun irc-connect ()
+  "Connect to freenode"
+  (interactive)
+  (erc :server "irc.freenode.net"
+       :port 6667
+       :nick erc-nick
+       :password irc-password))
+
+
+;; auto complete
+;; (require 'auto-complete-config)
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+;; (ac-config-default)
+;; (setq ac-delay 0.25) ;; eclipse uses 500ms
+
+(add-hook 'clojure-mode-hook 'subword-mode) ()
+
+(require 'init-nrepl)
+
+(winner-mode 1)
+(require 'buffer-move)
+(global-set-key (kbd "<C-s-up>")     'buf-move-up)
+(global-set-key (kbd "<C-s-down>")   'buf-move-down)
+(global-set-key (kbd "<C-s-left>")   'buf-move-left)
+(global-set-key (kbd "<C-s-right>")  'buf-move-right)
+
+;;; Orgmode!
+(require 'org-install)
+(global-set-key "\C-ca" 'org-agenda)
+
+(defvar dropbox-dir (expand-file-name "~/Dropbox"))
+
+(setq org-directory (expand-file-name "./Org" dropbox-dir))
+(setq org-mobile-directory (expand-file-name "./Apps/MobileOrg" dropbox-dir))
+(setq org-agenda-files (list (expand-file-name "./chap-agenda.org" org-directory)))
+(setq org-mobile-inbox-for-pull (expand-file-name "./inbox.org" org-mobile-directory))
 
 (provide 'init-chap)
 ;;; init-chap.el ends here
