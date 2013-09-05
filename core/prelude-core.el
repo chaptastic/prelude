@@ -227,7 +227,8 @@ there's a region, all lines that region covers will be duplicated."
         (cond
          ((vc-backend filename) (vc-rename-file filename new-name))
          (t
-          (rename-file filename new-name t)
+          ; ask for confirmation
+          (rename-file filename new-name 1)
           (set-visited-file-name new-name t t)))))))
 
 (defun prelude-delete-file-and-buffer ()
