@@ -29,7 +29,7 @@
                          (account-folder-path msg "/sent_mail"))
       mu4e-drafts-folder (lambda (msg) (account-folder-path msg "/drafts"))
       mu4e-trash-folder (lambda (msg) (account-folder-path msg "/trash"))
-      mu4e-refile-folder (lambda (msg) (account-folder-path msg "/all_mail"))
+      mu4e-refile-folder (lambda (msg) (account-folder-path msg "/Archived"))
       mu4e-headers-skip-duplicates t
       mu4e-view-show-images t
       mu4e-view-image-max-width 640
