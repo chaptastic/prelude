@@ -123,7 +123,7 @@
                          ["View URL" prelude-view-url]))
                       "Search Files (Grep)...")
 
-  (easy-menu-add-item nil '("Tools") '("--") "Search Files (Grep)..."))
+ (easy-menu-add-item nil '("Tools") '("--") "Search Files (Grep)..."))
 
 (defun prelude-mode-remove-menu ()
   "Remove `prelude-mode' menu entry."

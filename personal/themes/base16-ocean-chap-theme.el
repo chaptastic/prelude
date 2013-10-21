@@ -1,0 +1,47 @@
+(deftheme base16-ocean-chap
+  "Created 2013-08-07.")
+
+(custom-theme-set-variables
+ 'base16-ocean-chap
+ '(ansi-color-names-vector ["#343d46" "#bf616a" "#a3be8c" "#ebcb8b" "#8fa1b3" "#b48ead" "#8fa1b3" "#dfe1e8"]))
+
+(custom-theme-set-faces
+ 'base16-ocean-chap
+ '(fringe ((t (:background "#65737e"))))
+ '(minibuffer-prompt ((t (:foreground "#8fa1b3"))))
+ '(mode-line ((t (:background "#65737e" :foreground "#dfe1e8"))))
+ '(region ((t (:background "#3d454c" :underline t))))
+ '(font-lock-comment-face ((t (:foreground "#a7adba"))))
+ '(font-lock-constant-face ((t (:foreground "#a3be8c"))))
+ '(font-lock-doc-string-face ((t (:foreground "#a7adba"))))
+ '(font-lock-function-name-face ((t (:foreground "#8fa1b3"))))
+ '(font-lock-keyword-face ((t (:foreground "#b48ead"))))
+ '(font-lock-string-face ((t (:foreground "#a3be8c"))))
+ '(font-lock-type-face ((t (:foreground "#ebcb8b"))))
+ '(font-lock-variable-name-face ((t (:foreground "#bf616a"))))
+ '(font-lock-warning-face ((t (:foreground "#bf616a"))))
+ '(hl-line ((t (:background "#3D454C"))))
+ '(linum ((t (:background "#65737e" :foreground "#dfe1e8"))))
+ '(org-date ((t (:foreground "#b48ead"))))
+ '(org-done ((t (:foreground "#a3be8c"))))
+ '(org-hide ((t (:foreground "#65737e"))))
+ '(org-link ((t (:foreground "#8fa1b3"))))
+ '(org-todo ((t (:foreground "#bf616a"))))
+ '(show-paren-match ((t (:background "#8fa1b3" :foreground "#65737e"))))
+ '(show-paren-mismatch ((t (:background "#d08770" :foreground "#65737e"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#b48ead"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#8fa1b3"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#96b5b4"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#a3be8c"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#ebcb8b"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#d08770"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "#bf616a"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "#a7adba"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "#dfe1e8"))))
+ '(default ((t (:background "#343d46" :foreground "#dfe1e8"))))
+ '(erc-input-face ((t (:inherit font-lock-comment-face))))
+ '(erc-notice-face ((t (:inherit font-lock-keyword-face))))
+ '(erc-current-nick-face ((t (:inherit font-lock-constant-face))))
+ '(erc-timestamp-face ((t (:inherit font-lock-type-face)))))
+
+(provide-theme 'base16-ocean-chap)

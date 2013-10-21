@@ -43,10 +43,10 @@ With a prefix ARG always prompt for command to use."
   (when buffer-file-name
     (start-process "prelude-open-with-process"
                    "*prelude-open-with-output*"
-                   (cond
-                    ((and (not arg) (eq system-type 'darwin)) "open")
-                    ((and (not arg) (member system-type '(gnu gnu/linux gnu/kfreebsd))) "xdg-open")
-                    (t (read-shell-command "Open current file with: ")))
+                    (cond
+                     ((and (not arg) (eq system-type 'darwin)) "open")
+                     ((and (not arg) (member system-type '(gnu gnu/linux gnu/kfreebsd))) "xdg-open")
+                     (t (read-shell-command "Open current file with: ")))
                    (shell-quote-argument buffer-file-name))))
 
 (defun prelude-buffer-mode (buffer-or-name)
@@ -115,7 +115,7 @@ With a prefix ARG open line above the current line."
   (if arg
       (prelude-smart-open-line-above)
     (progn
-      (move-end-of-line nil)
+  (move-end-of-line nil)
       (newline-and-indent))))
 
 (defun prelude-top-join-line ()
@@ -257,7 +257,8 @@ there's a region, all lines that region covers will be duplicated."
         (cond
          ((vc-backend filename) (vc-rename-file filename new-name))
          (t
-          (rename-file filename new-name t)
+          ; ask for confirmation
+          (rename-file filename new-name 1)
           (set-visited-file-name new-name t t)))))))
 
 (defun prelude-delete-file-and-buffer ()
