@@ -5,7 +5,7 @@
 
 (require 'nrepl)
 (setq nrepl-hide-special-buffers t)
-(setq nrepl-popup-stacktraces-in-repl t)
+(setq nrepl-popup-stacktraces-in-repl nil)
 (setq nrepl-history-file "~/.emacs.d/nrepl-history")
 
 (defun clojure-mode-eldoc-hook ()

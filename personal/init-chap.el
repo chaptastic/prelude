@@ -38,7 +38,6 @@
                                soothe-theme
                                buffer-move
                                org-plus-contrib
-                               clojure-cheatsheet
                                irfc
                                gruber-darker-theme
                                hemisu-theme
