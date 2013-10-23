@@ -38,7 +38,15 @@
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 ;; set package-user-dir to be relative to Prelude install path
 (setq package-user-dir (expand-file-name "elpa" prelude-dir))
+
 (package-initialize)
+
+;; Work around missing archives caused by epl being installed
+(when (require 'epl nil 'noerror)
+  (epl-add-archive "gnu" "http://elpa.gnu.org/packages/")
+  (epl-add-archive "melpa" "http://melpa.milkbox.net/packages/")
+  (epl-initialize))
+
 
 (defvar prelude-packages
   '(ace-jump-mode ack-and-a-half anzu dash diminish elisp-slime-nav
@@ -51,7 +59,7 @@
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
-  "Check if all packages in `prelude-packages' are installed."
+  "Check if all packages in `prelude-packages' are installed\."
   (every #'package-installed-p prelude-packages))
 
 (defun prelude-require-package (package)
