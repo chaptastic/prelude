@@ -8,8 +8,14 @@
 ;; (setq debug-on-error 't)
 
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
 
 (prelude-ensure-module-deps '(deft
+                               cider
                                erc
                                epg epa
                                magithub
@@ -22,9 +28,7 @@
                                annoying-arrows-mode
                                color-theme-solarized
                                evil
-                               evil-leader
                                evil-nerd-commenter
-                               evil-paredit
                                surround
                                magit-gh-pulls
                                web-mode
@@ -35,12 +39,9 @@
                                ido-vertical-mode
                                ido-ubiquitous
                                ac-js2
-                               soothe-theme
                                buffer-move
                                org-plus-contrib
                                irfc
-                               gruber-darker-theme
-                               hemisu-theme
                                ir-black-theme
                                )
                             )
@@ -241,7 +242,7 @@
 
 (add-hook 'clojure-mode-hook 'subword-mode) ()
 
-(require 'init-nrepl)
+(require 'init-cider)
 
 (winner-mode 1)
 (require 'buffer-move)
